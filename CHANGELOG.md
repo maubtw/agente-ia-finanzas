@@ -2,6 +2,11 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y [SemVer](https://semver.org/lang/es/).
 
+## [Sin publicar]
+
+### Cambiado
+- Polymarket solo muestra mercados de la categoría cripto (etiqueta Crypto de Gamma, `tag_id=21`), ordenados por volumen en la propia API. La respuesta incluye `"categoria": "cripto"`.
+
 ## [0.1.0] - 2026-11-17
 
 ### Añadido

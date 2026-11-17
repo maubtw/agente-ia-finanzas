@@ -85,6 +85,7 @@ async def mexc_velas(simbolo: str = "BTCUSDT", intervalo: str = "1d",
 @app.get("/api/polymarket/mercados")
 async def polymarket_mercados(limite: int = Query(20, ge=1, le=100), busqueda: str = "",
                               c: httpx.AsyncClient = Depends(cliente_http)):
+    """Mercados abiertos de Polymarket, solo de la categoría cripto, ordenados por volumen."""
     return await polymarket.mercados(c, limite, busqueda)
 
 

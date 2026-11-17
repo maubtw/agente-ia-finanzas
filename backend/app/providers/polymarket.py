@@ -1,4 +1,8 @@
-"""Mercados de predicción de Polymarket vía Gamma API pública (solo lectura)."""
+"""Mercados de predicción de Polymarket vía Gamma API pública (solo lectura).
+
+Solo se consultan mercados de la etiqueta «Crypto» de Polymarket; el resto de categorías
+(política, deportes, etc.) no se exponen. El filtro es fijo, no configurable.
+"""
 from __future__ import annotations
 
 import json
@@ -9,6 +13,8 @@ from ..config import config
 from ..errors import get_json
 
 FUENTE = "Polymarket"
+# Etiqueta «Crypto» de Gamma (GET /tags/slug/crypto → id 21).
+TAG_CRIPTO_ID = "21"
 
 
 def _lista_json(valor) -> list:
@@ -48,12 +54,14 @@ def normalizar(m: dict) -> dict:
 
 async def mercados(cliente: httpx.AsyncClient, limite: int = 20, busqueda: str = "") -> dict:
     limite = max(1, min(limite, 100))
-    # active=true&closed=false filtra mercados abiertos; se piden más para ordenar por volumen aquí.
+    # Mercados abiertos (active=true&closed=false) solo de la etiqueta Crypto, ordenados por volumen
+    # en Gamma; se piden más que `limite` para aplicar la búsqueda por texto aquí.
     crudo = await get_json(cliente, FUENTE, f"{config.polymarket_url}/markets",
-                           {"active": "true", "closed": "false", "limit": 200})
+                           {"active": "true", "closed": "false", "tag_id": TAG_CRIPTO_ID,
+                            "order": "volumeNum", "ascending": "false", "limit": 200})
     filas = [normalizar(m) for m in crudo if isinstance(m, dict)]
     if busqueda:
         b = busqueda.lower()
         filas = [f for f in filas if b in f["pregunta"].lower()]
     filas.sort(key=lambda f: f["volumen"], reverse=True)
-    return {"mercados": filas[:limite], "fuente": FUENTE}
+    return {"mercados": filas[:limite], "categoria": "cripto", "fuente": FUENTE}

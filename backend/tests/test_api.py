@@ -89,6 +89,7 @@ def test_mexc_limite_de_solicitudes_responde_502():
 def test_polymarket_normaliza_y_ordena():
     def handler(req):
         assert req.url.params["active"] == "true" and req.url.params["closed"] == "false"
+        assert req.url.params["tag_id"] == "21"  # solo mercados de la etiqueta Crypto
         return httpx.Response(200, json=[
             {"id": 1, "question": "¿A?", "slug": "a", "outcomes": json.dumps(["Yes", "No"]),
              "outcomePrices": json.dumps(["0.2", "0.8"]), "volumeNum": 10},
@@ -99,6 +100,7 @@ def test_polymarket_normaliza_y_ordena():
     r = cliente_con(handler).get("/api/polymarket/mercados?limite=5").json()
     assert [m["id"] for m in r["mercados"]] == ["2", "1"]
     assert r["mercados"][0]["resultados"][0] == {"nombre": "Yes", "probabilidad": 0.6}
+    assert r["categoria"] == "cripto"
 
 
 def test_ruta_protegida_rechaza_clave(monkeypatch):

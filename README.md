@@ -16,7 +16,7 @@ La **v0.1.0** entrega la base: una UI en Vue + TypeScript + Vite y un backend Fa
 | Fuente | Qué muestra | API |
 | --- | --- | --- |
 | **MEXC** (cripto spot) | Ticker de 24 h y velas diarias de BTCUSDT / ETHUSDT; la vela del día en curso se marca como abierta y se excluye | MEXC Spot API v3 (`/api/v3/ticker/24hr`, `/api/v3/klines`) |
-| **Polymarket** (mercados de predicción) | Mercados abiertos ordenados por volumen, con la probabilidad implícita de cada resultado | Polymarket Gamma API (`/markets?active=true&closed=false`) |
+| **Polymarket** (mercados de predicción) | Solo mercados **cripto** abiertos (etiqueta Crypto), ordenados por volumen, con la probabilidad implícita de cada resultado | Polymarket Gamma API (`/markets?active=true&closed=false&tag_id=21`) |
 
 ![Captura de la UI v0.1.0: panel MEXC con ticker, gráfica de cierres y velas cerradas](docs/captura-v0.1.png)
 
@@ -120,7 +120,7 @@ npm run dev                      # http://localhost:5173
 | GET | `/api/version` | Nombre, versión, modo y tecnologías |
 | GET | `/api/mexc/ticker?simbolo=BTCUSDT` | Ticker 24 h |
 | GET | `/api/mexc/velas?simbolo=BTCUSDT&intervalo=1d&limite=30` | Velas con marca `cerrada` |
-| GET | `/api/polymarket/mercados?limite=20&busqueda=bitcoin` | Mercados abiertos por volumen |
+| GET | `/api/polymarket/mercados?limite=20&busqueda=bitcoin` | Mercados cripto abiertos por volumen |
 | GET | `/api/control/estado` | Protegida con `X-API-Key` (401 si falta o es incorrecta) |
 
 ## Pruebas

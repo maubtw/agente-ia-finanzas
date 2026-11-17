@@ -43,7 +43,7 @@ onMounted(async () => {
       <button role="tab" :aria-selected="fuente === 'mexc'" :class="{ activo: fuente === 'mexc' }"
               @click="fuente = 'mexc'">MEXC · cripto spot</button>
       <button role="tab" :aria-selected="fuente === 'polymarket'" :class="{ activo: fuente === 'polymarket' }"
-              @click="fuente = 'polymarket'">Polymarket · predicción</button>
+              @click="fuente = 'polymarket'">Polymarket · cripto</button>
     </nav>
 
     <p v-if="backendError" class="aviso">{{ backendError }}</p>

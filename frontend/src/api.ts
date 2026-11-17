@@ -74,5 +74,5 @@ export const api = {
   velas: (simbolo: string, intervalo = '1d', limite = 30) =>
     get<Velas>('/api/mexc/velas', { simbolo, intervalo, limite }),
   mercados: (limite = 20, busqueda = '') =>
-    get<{ mercados: Mercado[]; fuente: string }>('/api/polymarket/mercados', { limite, busqueda }),
+    get<{ mercados: Mercado[]; categoria: string; fuente: string }>('/api/polymarket/mercados', { limite, busqueda }),
 }

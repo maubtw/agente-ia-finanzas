@@ -30,15 +30,15 @@ onMounted(cargar)
 <template>
   <section class="panel">
     <div class="panel-cab">
-      <h2>Polymarket · mercados abiertos</h2>
+      <h2>Polymarket · mercados cripto abiertos</h2>
       <form class="acciones" @submit.prevent="cargar">
-        <input v-model="busqueda" type="search" placeholder="Buscar (p. ej. bitcoin)" aria-label="Buscar mercado" />
+        <input v-model="busqueda" type="search" placeholder="Buscar (p. ej. ethereum)" aria-label="Buscar mercado cripto" />
         <button :disabled="cargando" type="submit">{{ cargando ? 'Cargando…' : 'Buscar' }}</button>
       </form>
     </div>
 
     <p v-if="error" class="aviso">Polymarket: {{ error }}</p>
-    <p v-else-if="!cargando && actualizado && !mercados.length" class="nota">Sin mercados abiertos que coincidan.</p>
+    <p v-else-if="!cargando && actualizado && !mercados.length" class="nota">Sin mercados cripto abiertos que coincidan.</p>
 
     <ul class="mercados">
       <li v-for="m in mercados" :key="m.id" class="mercado">
@@ -54,6 +54,6 @@ onMounted(cargar)
           <template v-if="m.fecha_fin"> · cierra {{ m.fecha_fin.slice(0, 10) }}</template></span>
       </li>
     </ul>
-    <p v-if="actualizado" class="nota">Fuente: Polymarket Gamma API · precios = probabilidad implícita · consultado {{ actualizado.toLocaleString('es-MX') }}</p>
+    <p v-if="actualizado" class="nota">Fuente: Polymarket Gamma API · solo etiqueta Crypto · precios = probabilidad implícita · consultado {{ actualizado.toLocaleString('es-MX') }}</p>
   </section>
 </template>
